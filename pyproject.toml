@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "ics_vtimezones"
+version = "2020.1"
+description = "iCalendar vTimezone Data"
+authors = ["Niko Fink <icspy@niko.fink.bayern>"]
+license = "Apache-2.0"
+readme = "README.rst"
+homepage = "https://pypi.org/project/ics/"
+repository = "https://github.com/C4ptainCrunch/ics.py"
+documentation = "https://icspy.readthedocs.io/en/stable/"
+keywords = ["ics", "icalendar", "rfc5545", "timezone", "vtimezone"]
+
+[tool.poetry.dependencies]
+python =                     "^3.6"
+importlib_resources =        "^1.4"
+
+# extra: update
+ics = { version = "^0.8.0",   optional = true }
+
+[tool.poetry.extras]
+update = ["ics"]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
