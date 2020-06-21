@@ -73,4 +73,4 @@ for file in files:
 
 if args.index:
     with open(args.index, "wt") as f:
-        json.dump(zoneinfo_index, f)
+        json.dump(sorted(zoneinfo_index), f)

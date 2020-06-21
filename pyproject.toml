@@ -14,12 +14,20 @@ keywords = ["ics", "icalendar", "rfc5545", "timezone", "vtimezone"]
 python =                     "^3.6"
 importlib_resources =        "^1.4"
 
-# extra: update
-ics = { version = "^0.8.0",   optional = true }
+[tool.poetry.dependencies.ics]
+optional = true
+# extra = update
+# A) via PyPi
+#version = "^0.8.0"
+# B) via GitHub
+git = "https://github.com/C4ptainCrunch/ics.py.git"
+branch = "timezones"
+# C) via local filesystem
+#path = "../ics.py"
 
 [tool.poetry.extras]
 update = ["ics"]
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=1.0.8"]
 build-backend = "poetry.masonry.api"

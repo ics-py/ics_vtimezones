@@ -16,10 +16,10 @@ mkdir -p ./tmp/cldr
 tmp_vzic=$(realpath ./tmp/vzic)
 tmp_cldr=$(realpath ./tmp/cldr)
 
-sed -i 's#^version\s*=.*$#version = "$1"#' pyproject.toml
+sed -i 's#^version\s*=.*$#version = "'$1'"#' pyproject.toml
 
-pushd "src/ics_vtimezone"
-echo 'VERSION = "$1"\nBUILTIN_TZID_PREFIX = "/ics.py/"\nTZID_PREFIX = "/ics.py/$1/"' > "__config__.py"
+pushd "src/ics_vtimezones"
+echo -e 'VERSION = "'$1'"\nBUILTIN_TZID_PREFIX = "/ics.py/"\nTZID_PREFIX = "/ics.py/'$1'/"' > "__config__.py"
 mkdir -p ./data
 
 touch ./data/windows_zone_mapping.json
@@ -32,7 +32,7 @@ mkdir -p ./data/zoneinfo/
 zoneinfo_dir=$(realpath ./data/zoneinfo/)
 
 
-git clone https://github.com/libical/vzic.git "$tmp_vzic"
+git clone https://github.com/libical/vzic.git "$tmp_vzic" || echo "$tmp_vzic already exists"
 pushd "$tmp_vzic"
 rm -rf ./tzdata*
 curl -R ftp://ftp.iana.org/tz/tzdata-latest.tar.gz -o tzdata-latest.tar.gz
@@ -42,19 +42,17 @@ tar -xaf ../tzdata-latest.tar.gz
 popd
 sed -i 's#^OLSON_DIR\s*=.*$#OLSON_DIR = tzdata#' Makefile
 sed -i 's#^PRODUCT_ID\s*=.*$#PRODUCT_ID = ics.py - http://git.io/lLljaA - vTimezone.ics#' Makefile
-sed -i 's#^TZID_PREFIX\s*=.*$#TZID_PREFIX = /ics.py/$1/#' Makefile
+sed -i 's#^TZID_PREFIX\s*=.*$#TZID_PREFIX = /ics.py/'$1'/#' Makefile
 make -B
 ./vzic
 python3 "$update_zoneinfo" "$tmp_vzic/zoneinfo" "$zoneinfo_dir" --index="$zoneinfo_index"
 popd
 
 
-#cldr_url=$(curl https://api.github.com/repos/unicode-org/cldr/releases/latest | jq ".zipball_url" -r)
 pushd "$tmp_cldr"
-curl "https://unicode.org/Public/cldr/37/core.zip" -o core.zip
-rm -rf ./common
-unzip core.zip
-python3 "$update_windows" "$tmp_dir/common" "$windows_zone_mapping"
+cldr_tag=$(curl https://api.github.com/repos/unicode-org/cldr/releases/latest | jq ".tag_name" -r)
+curl "https://raw.githubusercontent.com/unicode-org/cldr/$cldr_tag/common/supplemental/windowsZones.xml" -o windowsZones.xml
+python3 "$update_windows" "$tmp_cldr/windowsZones.xml" "$windows_zone_mapping"
 popd
 
 popd

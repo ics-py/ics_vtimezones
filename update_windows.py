@@ -1,10 +1,9 @@
 import argparse
 import json
-import os
 from xml.etree.ElementTree import ElementTree
 
 parser = argparse.ArgumentParser()
-parser.add_argument("indir")
+parser.add_argument("infile")
 parser.add_argument("outfile")
 parser.add_argument("-n", "--dry_run", action="store_true")
 parser.add_argument("-q", "--quiet", action="store_true")
@@ -12,7 +11,7 @@ parser.add_argument("-v", "--verbose", action="store_true")
 
 args = parser.parse_args()
 
-sup_windows_zones = ElementTree(file=os.path.join(args.indir, "supplemental", "windowsZones.xml"))
+sup_windows_zones = ElementTree(file=args.infile)
 win_mapping = {}
 for map_zone in sup_windows_zones.findall('.//windowsZones/mapTimezones/mapZone'):
     if args.verbose:
@@ -25,4 +24,4 @@ for map_zone in sup_windows_zones.findall('.//windowsZones/mapTimezones/mapZone'
         win_mapping[key] = value
 if not args.dry_run:
     with open(args.outfile, "wt") as f:
-        json.dump(win_mapping, f)
+        json.dump(win_mapping, f, sort_keys=True)
