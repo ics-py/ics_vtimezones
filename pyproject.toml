@@ -18,10 +18,10 @@ importlib_resources =        "^1.4"
 optional = true
 # extra = update
 # A) via PyPi
-#version = "^0.8.0"
+version = "^0.8.0"
 # B) via GitHub
-git = "https://github.com/C4ptainCrunch/ics.py.git"
-branch = "timezones"
+#git = "https://github.com/C4ptainCrunch/ics.py.git"
+#branch = "timezones"
 # C) via local filesystem
 #path = "../ics.py"
 
