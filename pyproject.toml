@@ -11,8 +11,8 @@ documentation = "https://icspy.readthedocs.io/en/stable/"
 keywords = ["ics", "icalendar", "rfc5545", "timezone", "vtimezone"]
 
 [tool.poetry.dependencies]
-python =                     "^3.6"
-importlib_resources =        "^1.4"
+python =                     "^3.7"
+importlib_resources =        ">=1.4"
 
 [tool.poetry.dependencies.ics]
 optional = true
