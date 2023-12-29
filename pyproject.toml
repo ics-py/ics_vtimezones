@@ -16,14 +16,7 @@ importlib_resources =        ">=1.4"
 
 [tool.poetry.dependencies.ics]
 optional = true
-# extra = update
-# A) via PyPi
-version = "^0.8.0"
-# B) via GitHub
-#git = "https://github.com/C4ptainCrunch/ics.py.git"
-#branch = "timezones"
-# C) via local filesystem
-#path = "../ics.py"
+version = "^0.8.0.dev0"
 
 [tool.poetry.extras]
 update = ["ics"]

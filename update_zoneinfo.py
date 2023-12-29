@@ -5,16 +5,16 @@ import os
 import shutil
 import sys
 
-from ics.grammar import string_to_container
+from ics.contentline import string_to_container
 from ics.timezone import Timezone
 
 
 def read_tz(path):
     with open(path, "rt") as f:
         ics_cal = string_to_container(f.read())
-        if not (len(ics_cal) == 1 and len(ics_cal[0]) == 3 and ics_cal[0][2].name == "VTIMEZONE"):
+        if not (len(ics_cal) == 3 and ics_cal[2].name == "VTIMEZONE"):
             raise ValueError("vTimezone.ics file %s has invalid content" % path)
-        return Timezone.from_container(ics_cal[0][2])
+        return Timezone.from_container(ics_cal[2])
 
 
 def list_files(dir):

@@ -16,7 +16,7 @@ mkdir -p ./tmp/cldr
 tmp_vzic=$(realpath ./tmp/vzic)
 tmp_cldr=$(realpath ./tmp/cldr)
 
-sed -i 's#^version\s*=.*$#version = "'$1'"#' pyproject.toml
+sed -i .bak 's#^version\s*=.*$#version = "'$1'"#' pyproject.toml
 
 pushd "src/ics_vtimezones"
 echo -e 'VERSION = "'$1'"\nBUILTIN_TZID_PREFIX = "/ics.py/"\nTZID_PREFIX = "/ics.py/'$1'/"' > "__config__.py"
@@ -38,13 +38,13 @@ rm -rf ./tzdata*
 curl -R ftp://ftp.iana.org/tz/tzdata-latest.tar.gz -o tzdata-latest.tar.gz
 mkdir tzdata
 pushd tzdata
-tar -xaf ../tzdata-latest.tar.gz
+tar -xf ../tzdata-latest.tar.gz
 popd
-sed -i 's#^OLSON_DIR\s*=.*$#OLSON_DIR = tzdata#' Makefile
-sed -i 's#^PRODUCT_ID\s*=.*$#PRODUCT_ID = ics.py - http://git.io/lLljaA - vTimezone.ics#' Makefile
-sed -i 's#^TZID_PREFIX\s*=.*$#TZID_PREFIX = /ics.py/'$1'/#' Makefile
+sed -i .bak 's#^OLSON_DIR\s*=.*$#OLSON_DIR = tzdata#' Makefile
+sed -i .bak 's#^PRODUCT_ID\s*=.*$#PRODUCT_ID = ics.py - http://git.io/lLljaA - vTimezone.ics#' Makefile
+sed -i .bak 's#^TZID_PREFIX\s*=.*$#TZID_PREFIX = /ics.py/'$1'/#' Makefile
 make -B
-./vzic
+./vzic --olson-dir tzdata
 python3 "$update_zoneinfo" "$tmp_vzic/zoneinfo" "$zoneinfo_dir" --index="$zoneinfo_index"
 popd
 
