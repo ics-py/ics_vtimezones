@@ -40,10 +40,7 @@ mkdir tzdata
 pushd tzdata
 tar -xf ../tzdata-latest.tar.gz
 popd
-sed -i .bak 's#^OLSON_DIR\s*=.*$#OLSON_DIR = tzdata#' Makefile
-sed -i .bak 's#^PRODUCT_ID\s*=.*$#PRODUCT_ID = ics.py - http://git.io/lLljaA - vTimezone.ics#' Makefile
-sed -i .bak 's#^TZID_PREFIX\s*=.*$#TZID_PREFIX = /ics.py/'$1'/#' Makefile
-make -B
+make -B PRODUCT_ID="ics.py - http://git.io/lLljaA - iCal vTZ" TZID_PREFIX=/ics.py/$1/
 ./vzic --olson-dir tzdata
 python3 "$update_zoneinfo" "$tmp_vzic/zoneinfo" "$zoneinfo_dir" --index="$zoneinfo_index"
 popd
