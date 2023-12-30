@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ics_vtimezones"
-version = "2020.1"
+version = "2020.2"
 description = "iCalendar vTimezone Data"
 authors = ["Niko Fink <icspy@niko.fink.bayern>"]
 license = "CC0-1.0"
