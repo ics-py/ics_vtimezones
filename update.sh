@@ -45,8 +45,7 @@ mkdir -p ./tmp/cldr
 tmp_vzic=$(realpath ./tmp/vzic)
 tmp_cldr=$(realpath ./tmp/cldr)
 
-sed -i "" 's#^version\s*=.*$#version = "'$PACKAGE_VERSION'"#' pyproject.toml
-
+sed -i '.bak' 's/version.*VCHANGE/version = "'$PACKAGE_VERSION'" #VCHANGE/' pyproject.toml
 pushd "src/ics_vtimezones"
 echo -e 'VERSION = "'$PACKAGE_VERSION'"\nBUILTIN_TZID_PREFIX = "/ics.py/"\nTZID_PREFIX = "/ics.py/'$PACKAGE_VERSION'/"' > "__config__.py"
 mkdir -p ./data
