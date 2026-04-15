@@ -1,6 +1,6 @@
 [project]
 name = "ics_vtimezones"
-version = "2020.2" #VCHANGE
+version = "2020.3" #VCHANGE
 description = "iCalendar vTimezone Data"
 authors = [{name = "Niko Fink", email = "icspy@niko.fink.bayern"}]
 license = "CC0-1.0"
