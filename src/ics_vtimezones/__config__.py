@@ -1,3 +1,3 @@
-VERSION = "2022.7"
+VERSION = "2023.1"
 BUILTIN_TZID_PREFIX = "/ics.py/"
-TZID_PREFIX = "/ics.py/2022.7/"
+TZID_PREFIX = "/ics.py/2023.1/"
