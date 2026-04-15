@@ -12,7 +12,7 @@ then
     exit 1
 elif [ "$1" == "--list" ]
 then
-  VERSIONS=$(curl ftp://ftp.iana.org/tz/ --list-only --silent | grep -E "tzdb-\d{4}\w" | sed s/tzdb-// | sort -r)
+  VERSIONS=$(curl -s https://data.iana.org/time-zones/releases/ | grep -oE "tzdata[0-9]{4}[a-z]" | sed 's/tzdata//' | sort -u | sort -r)
   LATEST=$(echo "$VERSIONS" | head -n 1)
   echo "Latest version: $LATEST"
   echo "Available versions of the Olson database:"
@@ -21,9 +21,9 @@ then
 fi
 
 OLSON_VERSION=$1
-OLSON_URL=ftp://ftp.iana.org/tz/releases/tzdata$OLSON_VERSION.tar.gz
+OLSON_URL=https://data.iana.org/time-zones/releases/tzdata$OLSON_VERSION.tar.gz
 
-if curl -I "$OLSON_URL" --silent
+if curl -I "$OLSON_URL" --silent --fail
 then
     echo "Generating the ics_vtimezones package with Olson version $OLSON_VERSION"
 else
@@ -31,7 +31,7 @@ else
     exit 2
 fi
 
-PACKAGE_VERSION=$(echo "$OLSON_VERSION" | python -c "import sys; import string; i=sys.stdin.read().strip(); print(f'{i[:4]}.{string.ascii_lowercase.index(i[4])+1}')")
+PACKAGE_VERSION=$(echo "$OLSON_VERSION" | python3 -c "import sys; import string; i=sys.stdin.read().strip(); print(f'{i[:4]}.{string.ascii_lowercase.index(i[4])+1}')")
 echo "Python package version will be ics_vtimezones==$PACKAGE_VERSION"
 echo "============================"
 echo ""

@@ -3,7 +3,7 @@ from os import PathLike
 from pathlib import Path
 from typing import Dict, Optional, List
 
-import importlib_resources  # type: ignore
+from importlib import resources as importlib_resources
 
 from .__config__ import *
 
