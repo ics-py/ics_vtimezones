@@ -6,7 +6,7 @@ authors = [{name = "Niko Fink", email = "icspy@niko.fink.bayern"}]
 license = "CC0-1.0"
 readme = "README.md"
 keywords = ["ics", "icalendar", "rfc5545", "timezone", "vtimezone"]
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 
 [project.urls]
 Homepage = "https://pypi.org/project/ics_vtimezones/"
